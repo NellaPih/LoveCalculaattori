@@ -1,0 +1,35 @@
+service: miniproject-calculator
+
+custom:
+  secrets: ${file(secrets.json)}
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: ${self:custom.secrets.NODE_ENV}
+  region: 'eu-central-1'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+      Resource: "*"
+  environment:
+    REGION_NAME: 'eu-central-1'
+    NODE_ENV: ${self:custom.secrets.NODE_ENV}
+    SOURCE: ${self:custom.secrets.SOURCE}
+    DOMAIN: ${self:custom.secrets.DOMAIN}
+
+functions:
+  sendEmail:
+    handler: handler.sendEmail
+    description: This function will give you your love result
+    events:
+      - http:
+          path: send-email
+          method: post
+          integration: lambda
+          cors: true
+          response:
+            headers:
+              "Access-Control-Allow_Origin": "'*'"
