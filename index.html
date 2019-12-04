@@ -5,10 +5,40 @@
 <title>Love Calculator</title>
 <style type="text/css">
 	label {
-		display: block;
-		width: 7em;
-		float: left;
-	}
+        display: block;
+        width: 10em;
+        float: left;
+        font: 80% verdana, "Trebuchet MS", arial, tahoma, sans-serif;
+        color: white;
+        padding-left: 100px;
+        margin: 10px 0px;
+    }
+    p {
+        font: 100% verdana, "Trebuchet MS", arial, tahoma, sans-serif;
+        padding-left: 100px;
+        color:white;
+        margin-bottom: 50px;
+    }
+    body {
+        background-image: url(https://lovecalculaattori.s3.eu-central-1.amazonaws.com/love2.jpg);
+        color: white;
+        padding-left: 100px;
+        margin-top: 50px;
+    }
+    ::-webkit-input-placeholder { 
+        background: rgb(245, 221, 224);
+    }
+    h2 {
+        margin: 0 0 0 0;
+        font: 130% verdana, "Trebuchet MS", arial, tahoma, sans-serif;
+        padding: 100px;
+        display:inline;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        color: #833B0B;
+        background: inherit;
+    }
+    
     .button {
         position: absolute;
         top: 50%; 
@@ -20,8 +50,8 @@
 </style>
 </head>
 <body> 
-    <h3>Love Calculator</h3>
-    <p>Laske rakkausprosenttisi. Oletteko luotuja toisillenne vai onko suhteen liekki hiipumassa?</p>
+    <h2>Love Calculator</h2>
+    <p>Laske rakkausprosenttisi. Oletteko luotuja toisillenne vai voisitko pystyä parempaan?</p>
 
 	<form id="contactForm">
         <label>1. nimi</label>
@@ -39,6 +69,7 @@
             <button type="submit" id="submit">Laske</button>
         </div>
     </form>
+
 
 
 	

@@ -122,7 +122,13 @@
                   "Effect": "Allow",
                   "Action": [
                     "ses:SendEmail",
-                    "ses:SendRawEmail"
+                    "ses:SendRawEmail",
+                    "dynamodb:GetItem",
+                    "dynamodb:Query",
+                    "dynamodb:Scan",
+                    "dynamodb:BatchWriteItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:UpdateItem"
                   ],
                   "Resource": "*"
                 }
@@ -153,7 +159,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/miniproject-calculator/dev/1575451078905-2019-12-04T09:17:58.905Z/miniproject-calculator.zip"
+          "S3Key": "serverless/miniproject-calculator/dev/1575465271680-2019-12-04T13:14:31.680Z/miniproject-calculator.zip"
         },
         "FunctionName": "miniproject-calculator-dev-sendEmail",
         "Handler": "handler.sendEmail",
@@ -181,14 +187,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "SendEmailLambdaVersionPfpbV7qTnmZf6SbspH9RWR9YT2DXuIktFlQoMz07f6M": {
+    "SendEmailLambdaVersionsQGSJyCYrnVzURGDz9uhvZeNLbSb1tGqHHVBlYj68": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SendEmailLambdaFunction"
         },
-        "CodeSha256": "Xu8NXih7Cy3n1un4e57/8oJbrc7z5zEGL1QiBz3X7GQ=",
+        "CodeSha256": "JHNRRWD8I9pQE6LEL875AZfqITJUPQRIOzlHIRgMWAY=",
         "Description": "This function will give you your love result"
       }
     },
@@ -469,7 +475,7 @@
         ]
       }
     },
-    "ApiGatewayDeployment1575451077030": {
+    "ApiGatewayDeployment1575465269875": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -518,6 +524,28 @@
           ]
         }
       }
+    },
+    "usersTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": "calculator_collection",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "email",
+            "AttributeType": "S"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "email",
+            "KeyType": "HASH"
+          }
+        ],
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1
+        }
+      }
     }
   },
   "Outputs": {
@@ -529,7 +557,7 @@
     "SendEmailLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SendEmailLambdaVersionPfpbV7qTnmZf6SbspH9RWR9YT2DXuIktFlQoMz07f6M"
+        "Ref": "SendEmailLambdaVersionsQGSJyCYrnVzURGDz9uhvZeNLbSb1tGqHHVBlYj68"
       }
     },
     "ServiceEndpoint": {

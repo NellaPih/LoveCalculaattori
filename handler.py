@@ -3,15 +3,27 @@ import boto3
 import os
 from botocore.vendored import requests
 
+dynamodb = boto3.client('dynamodb')
+
+def update_index(tableName,email):
+    response = dynamodb.put_item(
+        TableName=tableName,
+        Item={
+            'email': {'S': email}
+            }
+        ) 
 
 def sendEmail(event, context):
     data = event['body'] 
     print(data)   
     source = 'nella.pihlajaniemi@gmail.com'    
-    subject = 'Love Calculator Result'    
+    subject = 'Love Calculator'    
     destination = data['destination']
     fname = data['fname']
     sname = data['sname']
+    error_message = None
+
+    update_index('calculator_collection',destination)
 
     url = "https://love-calculator.p.rapidapi.com/getPercentage"
     querystring = {"fname":fname,"sname":sname}
@@ -23,17 +35,46 @@ def sendEmail(event, context):
     output = requests.request("GET", url, headers=headers, params=querystring)
 
     json_output = json.loads(output.text)
-        
+
+    if 'error' in json_output:
+        print("Hei")
+        error_message = """
+        <body>
+            <p>Rakkauslaskurissa on ruuhkaa. Yritä hetken kuluttua uudelleen.</p>
+        </body>"""
+        return error_message
 
     percentage = json_output['percentage']
-    result = json_output['result']
+
+    if int(percentage) <= 10:
+        result = "Välitön ero on ainoa vaihtoehto"
+    elif int(percentage) <= 20:
+        result = "Harkitkaa pariterapiaa"
+    elif int(percentage) <= 30:
+        result = "Siinä ja siinä, että kannattaako olla yhdessä"
+    elif int(percentage) <= 40:
+        result = "Teillä on joskus hyviäkin päiviä"
+    elif int(percentage) <= 50:
+        result = "Ette tule eroamaan aivan heti"
+    elif int(percentage) <= 60:
+        result = "Sovitte yllättävän hyvin yhteen"
+    elif int(percentage) <= 70:
+        result = "Oho, nyt on kyllä hyvä pari"
+    elif int(percentage) <= 80:
+        result = "Teillä on vielä pitkä yhteinen taival edessä"
+    elif int(percentage) <= 90:
+        result = "Voiko noin onnellista parisuhdetta ollakaan!"
+    elif int(percentage) <= 100:
+        result = "Huijarit! Yksikään pari ei ole noin täydellinen"
+
+    #result = json_output['result']
 
     love_pic = """
         <body>
-            <h4>Hei """ +  fname + """ ja """ + sname + """!</h4>
-            <p>Rakkausprosenttinne on: """ + str(percentage) + """%. 
-            <br>Tulos: """ + str(result) + """</p>
-            <p>Terveisin LoveGurus  
+        <h4>Hei """ +  fname + """ ja """ + sname + """!</h4>
+        <p>Rakkausprosenttinne on: """ + str(percentage) + """% 
+        <br>Tuomio: """ + str(result) + """</p>
+        <p>Terveisin LoveGurus  
         <br>Ira ja Nella </p>
         </body>
         <p><img src="https://lovecalculaattori.s3.eu-central-1.amazonaws.com/rakkauslaskuri-1.jpg" alt="Love" width="600" height="350" /></p>"""
@@ -41,11 +82,11 @@ def sendEmail(event, context):
     #_message = "Hei " + fname + " ja " + sname + "!\n" + "Rakkausprosenttinne on: " + str(percentage) + "%.\nTulos: " + str(result) + "\n\n" + "Terveisin\n" + "LoveGurus Ira ja Nella\n\n" + love_pic
     
     client = boto3.client('ses' )    
-        
+    
     response = client.send_email(
         Destination={
             'ToAddresses': [destination]
-            },
+        },
         Message={
             'Body': {
                 'Html': {

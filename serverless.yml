@@ -13,6 +13,12 @@ provider:
       Action:
         - ses:SendEmail
         - ses:SendRawEmail
+        - dynamodb:GetItem
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:BatchWriteItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
       Resource: "*"
   environment:
     REGION_NAME: 'eu-central-1'
@@ -33,3 +39,30 @@ functions:
           response:
             headers:
               "Access-Control-Allow_Origin": "'*'"
+resources:
+  Resources:
+    usersTable: 
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: calculator_collection
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+  
+
+
+
+
+
+        
+
+
+
+
+
