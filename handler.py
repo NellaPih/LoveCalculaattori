@@ -36,13 +36,17 @@ def sendEmail(event, context):
 
     json_output = json.loads(output.text)
 
-    if 'error' in json_output:
-        print("Hei")
-        error_message = """
-        <body>
-            <p>Rakkauslaskurissa on ruuhkaa. Yritä hetken kuluttua uudelleen.</p>
-        </body>"""
-        return error_message
+    try:
+        if json_output['message']:
+            print("Hei")
+            error_message = """
+            <body>
+                <p>Rakkauslaskurissa on ruuhkaa. Yritä hetken kuluttua uudelleen.</p>
+            </body>"""
+            return error_message
+    except KeyError:
+        pass
+                 
 
     percentage = json_output['percentage']
 
@@ -66,8 +70,6 @@ def sendEmail(event, context):
         result = "Voiko noin onnellista parisuhdetta ollakaan!"
     elif int(percentage) <= 100:
         result = "Huijarit! Yksikään pari ei ole noin täydellinen"
-
-    #result = json_output['result']
 
     love_pic = """
         <body>
