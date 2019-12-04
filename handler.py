@@ -5,7 +5,8 @@ from botocore.vendored import requests
 
 
 def sendEmail(event, context):
-    data = event['body']    
+    data = event['body'] 
+    print(data)   
     source = 'nella.pihlajaniemi@gmail.com'    
     subject = 'Love Calculator Result'    
     destination = data['destination']
@@ -28,17 +29,16 @@ def sendEmail(event, context):
     result = json_output['result']
 
     love_pic = """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Love Calculator</title>
-    </head>
-    <body>
-        <img src="https://lovecalculaattori.s3.eu-central-1.amazonaws.com/rakkauslaskuri.jpg">   
-    </body>
-    </html>"""
+        <body>
+            <h4>Hei """ +  fname + """ ja """ + sname + """!</h4>
+            <p>Rakkausprosenttinne on: """ + str(percentage) + """%. 
+            <br>Tulos: """ + str(result) + """</p>
+            <p>Terveisin LoveGurus  
+        <br>Ira ja Nella </p>
+        </body>
+        <p><img src="https://lovecalculaattori.s3.eu-central-1.amazonaws.com/rakkauslaskuri-1.jpg" alt="Love" width="600" height="350" /></p>"""
 
-    _message = "Hei " + fname + " ja " + sname + "!\n" + "Rakkausprosenttinne on: " + str(percentage) + "%.\nTulos: " + str(result) + "\n\n" + "Terveisin\n" + "LoveGurus Ira ja Nella\n\n" + love_pic
+    #_message = "Hei " + fname + " ja " + sname + "!\n" + "Rakkausprosenttinne on: " + str(percentage) + "%.\nTulos: " + str(result) + "\n\n" + "Terveisin\n" + "LoveGurus Ira ja Nella\n\n" + love_pic
     
     client = boto3.client('ses' )    
         
@@ -50,7 +50,7 @@ def sendEmail(event, context):
             'Body': {
                 'Html': {
                     'Charset': 'UTF-8',
-                    'Data': _message,
+                    'Data': love_pic,
                 },
             },
             'Subject': {
@@ -59,5 +59,5 @@ def sendEmail(event, context):
             },
         },
         Source=source,
-)
-    return _message
+    )
+    return love_pic

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Love Calculator</title>
+<style type="text/css">
+	label {
+		display: block;
+		width: 7em;
+		float: left;
+	}
+    .button {
+        position: absolute;
+        top: 50%; 
+    }
+    .wrapper {
+        text-align: left;
+        padding: 0px 0px 0px 100px;
+    }
+</style>
+</head>
+<body> 
+    <h3>Love Calculator</h3>
+    <p>Laske rakkausprosenttisi. Oletteko luotuja toisillenne vai onko suhteen liekki hiipumassa?</p>
+
+	<form id="contactForm">
+        <label>1. nimi</label>
+        <input type="text" placeholder="1. nimi" name="fname" required><br>
+        <br>
+        <label>2. nimi</label>
+        <input type="text" placeholder="2. nimi" name="sname" required><br>
+        <br>
+        <label>Sähköposti</label>
+        <input type="email" placeholder="example@mail.com" name="destination" required><br>
+        <br>
+        <div id="toast"></div>
+        <br>
+        <div class="wrapper">
+            <button type="submit" id="submit">Laske</button>
+        </div>
+    </form>
+
+
+	
+	 <script type="text/javascript">
+	const form = document.getElementById('contactForm')
+    const url = 'https://gf0oz5mmfe.execute-api.eu-central-1.amazonaws.com/dev/send-email'
+    const toast = document.getElementById('toast')
+    const submit = document.getElementById('submit')
+    const res = ''
+
+    function post(url, body, callback) {
+        var req = new XMLHttpRequest();
+        req.open("POST", url, true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.addEventListener("load", function () {
+            if (req.status < 400) {
+                callback(null, JSON.parse(req.responseText));
+            } else {
+                callback(new Error("Request failed: " + req.statusText));
+            }
+        });
+        req.send(JSON.stringify(body));
+    }
+    function success (res) {
+        var parser = new DOMParser();
+        var htmlDoc = parser.parseFromString(res, 'text/html');
+        var result = htmlDoc.getElementsByTagName('p');
+        toast.innerHTML = result[0].innerHTML//'Kurkkaa sähköpostiisi. Rakkausprosentti on siellä.'
+        submit.disabled = false
+        submit.blur()
+        form.fname.focus()
+        form.sname.focus()
+        form.fname.value = ''
+        form.sname.value = ''
+        form.destination.value = ''
+    }
+    function error (err) {
+        toast.innerHTML = 'Rakkauslaskurissa on ruuhkaa. Yritä hetken kuluttua uudelleen.'
+        submit.disabled = false
+        console.log(err)
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault()
+        toast.innerHTML = 'Calculating'
+        submit.disabled = true
+
+        const payload = {
+            fname: form.fname.value,
+            sname: form.sname.value,
+            destination: form.destination.value
+            
+        }
+        post(url, payload, function (err, res) {
+            if (err) { return error(err) }
+            success(res)
+        })
+    })
+	</script>
+</body>
+</html>
+

@@ -153,7 +153,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/miniproject-calculator/dev/1575385046738-2019-12-03T14:57:26.738Z/miniproject-calculator.zip"
+          "S3Key": "serverless/miniproject-calculator/dev/1575451078905-2019-12-04T09:17:58.905Z/miniproject-calculator.zip"
         },
         "FunctionName": "miniproject-calculator-dev-sendEmail",
         "Handler": "handler.sendEmail",
@@ -171,6 +171,7 @@
           "Variables": {
             "REGION_NAME": "eu-central-1",
             "NODE_ENV": "dev",
+            "SOURCE": "nella.pihlajaniemi@gmail.com",
             "DOMAIN": "*"
           }
         }
@@ -180,14 +181,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "SendEmailLambdaVersion61AQJOtsWFchExS0LzC6STtfuyl4HhnH2UAhlldUb4": {
+    "SendEmailLambdaVersionPfpbV7qTnmZf6SbspH9RWR9YT2DXuIktFlQoMz07f6M": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "SendEmailLambdaFunction"
         },
-        "CodeSha256": "t8jyMvQRGHaxzQCqProx0G57WsaUT9owL4cDPYNmY8I=",
+        "CodeSha256": "Xu8NXih7Cy3n1un4e57/8oJbrc7z5zEGL1QiBz3X7GQ=",
         "Description": "This function will give you your love result"
       }
     },
@@ -468,7 +469,7 @@
         ]
       }
     },
-    "ApiGatewayDeployment1575385044970": {
+    "ApiGatewayDeployment1575451077030": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -528,7 +529,7 @@
     "SendEmailLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SendEmailLambdaVersion61AQJOtsWFchExS0LzC6STtfuyl4HhnH2UAhlldUb4"
+        "Ref": "SendEmailLambdaVersionPfpbV7qTnmZf6SbspH9RWR9YT2DXuIktFlQoMz07f6M"
       }
     },
     "ServiceEndpoint": {
