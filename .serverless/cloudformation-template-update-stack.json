@@ -177,7 +177,7 @@
           "Variables": {
             "REGION_NAME": "eu-central-1",
             "NODE_ENV": "dev",
-            "SOURCE": "nella.pihlajaniemi@gmail.com",
+            "SOURCE": "example@mail.com",
             "DOMAIN": "*"
           }
         }
