@@ -184,7 +184,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/miniproject-calculator/dev/1575466640253-2019-12-04T13:37:20.253Z/miniproject-calculator.zip"
+                "S3Key": "serverless/miniproject-calculator/dev/1575472672155-2019-12-04T15:17:52.155Z/miniproject-calculator.zip"
               },
               "FunctionName": "miniproject-calculator-dev-sendEmail",
               "Handler": "handler.sendEmail",
@@ -212,14 +212,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "SendEmailLambdaVersiont1UYIhrq8gSCWq9Fq91bfFchiEBtBvbqVkmUl2mn3o": {
+          "SendEmailLambdaVersion4sxSYA56GwjF3VUD1GL5LKv7GsxzsvCx241Kf6oKM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SendEmailLambdaFunction"
               },
-              "CodeSha256": "pb3Js/RxVmG5Clu/c7rp8bV0cqChUjEv5X+ZLsozmek=",
+              "CodeSha256": "xmL8+ihTaISCkbj8Gsf/6hmyr4Zp/x5e/0SMhhmAx40=",
               "Description": "This function will give you your love result"
             }
           },
@@ -500,7 +500,7 @@
               ]
             }
           },
-          "ApiGatewayDeployment1575466638598": {
+          "ApiGatewayDeployment1575472670593": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -582,7 +582,7 @@
           "SendEmailLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SendEmailLambdaVersiont1UYIhrq8gSCWq9Fq91bfFchiEBtBvbqVkmUl2mn3o"
+              "Ref": "SendEmailLambdaVersion4sxSYA56GwjF3VUD1GL5LKv7GsxzsvCx241Kf6oKM"
             }
           },
           "ServiceEndpoint": {
@@ -796,7 +796,7 @@
     "artifact": "C:\\Users\\Nella\\Academy\\Viikko10\\love-calculator-api\\.serverless\\miniproject-calculator.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/miniproject-calculator/dev/1575466640253-2019-12-04T13:37:20.253Z",
+    "artifactDirectoryName": "serverless/miniproject-calculator/dev/1575472672155-2019-12-04T15:17:52.155Z",
     "artifact": "miniproject-calculator.zip"
   }
 }

@@ -4,6 +4,7 @@ import os
 from botocore.vendored import requests
 
 dynamodb = boto3.client('dynamodb')
+myEmail = os.environ.get('SOURCE')
 
 def update_index(tableName,email):
     response = dynamodb.put_item(
@@ -14,9 +15,8 @@ def update_index(tableName,email):
         ) 
 
 def sendEmail(event, context):
-    data = event['body'] 
-    print(data)   
-    source = 'nella.pihlajaniemi@gmail.com'    
+    data = event['body']   
+    source = myEmail   
     subject = 'Love Calculator'    
     destination = data['destination']
     fname = data['fname']
@@ -80,8 +80,6 @@ def sendEmail(event, context):
         <br>Ira ja Nella </p>
         </body>
         <p><img src="https://lovecalculaattori.s3.eu-central-1.amazonaws.com/rakkauslaskuri-1.jpg" alt="Love" width="600" height="350" /></p>"""
-
-    #_message = "Hei " + fname + " ja " + sname + "!\n" + "Rakkausprosenttinne on: " + str(percentage) + "%.\nTulos: " + str(result) + "\n\n" + "Terveisin\n" + "LoveGurus Ira ja Nella\n\n" + love_pic
     
     client = boto3.client('ses' )    
     

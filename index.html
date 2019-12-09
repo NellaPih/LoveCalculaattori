@@ -45,7 +45,10 @@
     }
     .wrapper {
         text-align: left;
-        padding: 0px 0px 0px 100px;
+        padding: 0px 0px 0px 200px;
+    }
+    .toast {
+        padding: 0px 0px 0px 200px;
     }
 </style>
 </head>
@@ -63,9 +66,9 @@
         <label>Sähköposti</label>
         <input type="email" placeholder="example@mail.com" name="destination" required><br>
         <br>
-        <div id="toast"></div>
-        <br>
         <div class="wrapper">
+            <div id="toast"></div>
+            <br>
             <button type="submit" id="submit">Laske</button>
         </div>
     </form>
@@ -97,7 +100,7 @@
         var parser = new DOMParser();
         var htmlDoc = parser.parseFromString(res, 'text/html');
         var result = htmlDoc.getElementsByTagName('p');
-        toast.innerHTML = result[0].innerHTML//'Kurkkaa sähköpostiisi. Rakkausprosentti on siellä.'
+        toast.innerHTML = result[0].innerHTML
         submit.disabled = false
         submit.blur()
         form.fname.focus()
