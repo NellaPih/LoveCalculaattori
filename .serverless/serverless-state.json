@@ -29,7 +29,7 @@
       "environment": {
         "REGION_NAME": "eu-central-1",
         "NODE_ENV": "dev",
-        "SOURCE": "nella.pihlajaniemi@gmail.com",
+        "SOURCE": "example@mail.com",
         "DOMAIN": "*"
       },
       "versionFunctions": true,
@@ -202,7 +202,7 @@
                 "Variables": {
                   "REGION_NAME": "eu-central-1",
                   "NODE_ENV": "dev",
-                  "SOURCE": "nella.pihlajaniemi@gmail.com",
+                  "SOURCE": "example@mail.com",
                   "DOMAIN": "*"
                 }
               }
@@ -682,7 +682,7 @@
     "custom": {
       "secrets": {
         "NODE_ENV": "dev",
-        "SOURCE": "nella.pihlajaniemi@gmail.com",
+        "SOURCE": "example@mail.com",
         "DOMAIN": "*"
       }
     },
